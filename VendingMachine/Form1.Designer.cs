@@ -47,6 +47,8 @@
             moneyPanel = new Panel();
             payment_but = new Button();
             cancel_but = new Button();
+            moneyIn_txtBox = new TextBox();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)money_5p).BeginInit();
             ((System.ComponentModel.ISupportInitialize)money_10p).BeginInit();
             ((System.ComponentModel.ISupportInitialize)paymentBox).BeginInit();
@@ -89,7 +91,6 @@
             main_txtBox.ScrollBars = ScrollBars.Vertical;
             main_txtBox.Size = new Size(415, 273);
             main_txtBox.TabIndex = 4;
-            main_txtBox.TextChanged += main_txtBox_TextChanged;
             // 
             // sum_btn
             // 
@@ -164,6 +165,7 @@
             money_20p.Size = new Size(102, 95);
             money_20p.TabIndex = 9;
             money_20p.TabStop = false;
+            money_20p.MouseDown += money_MouseDown;
             // 
             // money_1GBP
             // 
@@ -174,6 +176,7 @@
             money_1GBP.Size = new Size(102, 95);
             money_1GBP.TabIndex = 10;
             money_1GBP.TabStop = false;
+            money_1GBP.MouseDown += money_MouseDown;
             // 
             // money_50p
             // 
@@ -184,6 +187,7 @@
             money_50p.Size = new Size(102, 95);
             money_50p.TabIndex = 11;
             money_50p.TabStop = false;
+            money_50p.MouseDown += money_MouseDown;
             // 
             // money_5GBP
             // 
@@ -194,6 +198,7 @@
             money_5GBP.Size = new Size(210, 107);
             money_5GBP.TabIndex = 12;
             money_5GBP.TabStop = false;
+            money_5GBP.MouseDown += money_MouseDown;
             // 
             // money_10GBP
             // 
@@ -204,6 +209,7 @@
             money_10GBP.Size = new Size(210, 107);
             money_10GBP.TabIndex = 13;
             money_10GBP.TabStop = false;
+            money_10GBP.MouseDown += money_MouseDown;
             // 
             // money_2GBP
             // 
@@ -214,6 +220,7 @@
             money_2GBP.Size = new Size(102, 95);
             money_2GBP.TabIndex = 14;
             money_2GBP.TabStop = false;
+            money_2GBP.MouseDown += money_MouseDown;
             // 
             // drinkSelectionPanel
             // 
@@ -228,6 +235,8 @@
             // 
             // moneyPanel
             // 
+            moneyPanel.Controls.Add(label1);
+            moneyPanel.Controls.Add(moneyIn_txtBox);
             moneyPanel.Controls.Add(payment_but);
             moneyPanel.Controls.Add(money_20p);
             moneyPanel.Controls.Add(money_5p);
@@ -245,7 +254,7 @@
             // 
             // payment_but
             // 
-            payment_but.Location = new Point(546, 236);
+            payment_but.Location = new Point(542, 258);
             payment_but.Name = "payment_but";
             payment_but.Size = new Size(118, 42);
             payment_but.TabIndex = 18;
@@ -262,6 +271,22 @@
             cancel_but.Text = "Cancel";
             cancel_but.UseVisualStyleBackColor = true;
             cancel_but.Click += cancel_but_Click;
+            // 
+            // moneyIn_txtBox
+            // 
+            moneyIn_txtBox.Location = new Point(542, 217);
+            moneyIn_txtBox.Name = "moneyIn_txtBox";
+            moneyIn_txtBox.Size = new Size(118, 27);
+            moneyIn_txtBox.TabIndex = 19;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(448, 219);
+            label1.Name = "label1";
+            label1.Size = new Size(73, 20);
+            label1.TabIndex = 20;
+            label1.Text = "Money In:";
             // 
             // Form1
             // 
@@ -286,6 +311,7 @@
             ((System.ComponentModel.ISupportInitialize)money_2GBP).EndInit();
             drinkSelectionPanel.ResumeLayout(false);
             moneyPanel.ResumeLayout(false);
+            moneyPanel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -311,5 +337,7 @@
         private Panel moneyPanel;
         private Button payment_but;
         private Button cancel_but;
+        private Label label1;
+        private TextBox moneyIn_txtBox;
     }
 }
