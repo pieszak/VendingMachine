@@ -3,6 +3,9 @@ using System;
 using System.Drawing.Text;
 using System.Security.AccessControl;
 
+
+// Need to add a receipt function that prints the amount paid and the text box etc...
+
 namespace VendingMachine
 {
     public partial class Form1 : Form
@@ -114,8 +117,8 @@ namespace VendingMachine
             {
                 //ERROR
             }
-            // main_txtBox.Text = selectionText + " - £" + str_tempDrinkPrice + ControlChars.NewLine;
-            moneyIn_txtBox.Text = "£" + totalMoneyInput;
+            // main_txtBox.Text = selectionText + " - Â£" + str_tempDrinkPrice + ControlChars.NewLine;
+            moneyIn_txtBox.Text = "Â£" + totalMoneyInput;
         }
 
         #endregion
@@ -135,18 +138,18 @@ namespace VendingMachine
 
                 if (main_txtBox.Text == null)
                 {
-                    main_txtBox.Text = selectionText + " - £" + str_tempDrinkPrice + ControlChars.NewLine;
+                    main_txtBox.Text = selectionText + " - Â£" + str_tempDrinkPrice + ControlChars.NewLine;
                 }
                 else
                 {
-                    main_txtBox.Text = main_txtBox.Text + selectionText + " - £" + str_tempDrinkPrice + ControlChars.NewLine;
+                    main_txtBox.Text = main_txtBox.Text + selectionText + " - Â£" + str_tempDrinkPrice + ControlChars.NewLine;
                 }
             }
             else if (foo == 1)
             {
                 string tempTotalPriceCost = totalPriceCost.ToString("F2");
 
-                main_txtBox.Text = main_txtBox.Text + "Your total is: £" + tempTotalPriceCost;
+                main_txtBox.Text = main_txtBox.Text + "Your total is: Â£" + tempTotalPriceCost;
 
                 // Disables the buttons as per the assingment
                 buttonControlEnabled(0, false); //turns off the drinks selection
@@ -199,7 +202,7 @@ namespace VendingMachine
             {
                 // not enough money
                 decimal foo = totalPriceCost - totalMoneyInput;
-                System.Windows.Forms.MessageBox.Show("Please insert £" + foo);
+                System.Windows.Forms.MessageBox.Show("Please insert Â£" + foo);
             }
             else if (totalPriceCost == totalPriceCost)
             {
