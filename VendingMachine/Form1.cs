@@ -48,7 +48,32 @@ namespace VendingMachine
             }
         }
 
+        public static void WriteAllText(string content) //this works
+        {
+            try
+            {
+                // Get the current directory where the program is running
+                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+
+                // Create a path for the text file in the internal folder
+                string filePath = Path.Combine(currentDirectory, DateTime.Now + ".txt"); //send to debug/net/
+
+                // Write the content to the file
+                File.WriteAllText(filePath, content);
+
+                Console.WriteLine($"File successfully written to: {filePath}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error writing file: {ex.Message}");
+            }
+        }
+
         
+
+
+
         public void resetValues()
         {
             totalMoneyInput = 0; totalPriceCost = 0; main_txtBox.Clear(); moneyIn_txtBox.Clear(); buttonControlEnabled(1, false); buttonControlEnabled(0, true);
@@ -204,6 +229,8 @@ namespace VendingMachine
             else if (totalPriceCost == totalPriceCost)
             {
                 System.Windows.Forms.MessageBox.Show("Thank you for your payment! Please take your drink");
+                
+                WriteAllText(main_txtBox.Text);
                 resetValues();
             }
             else if (totalPriceCost < totalMoneyInput)
