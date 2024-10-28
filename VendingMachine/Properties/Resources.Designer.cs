@@ -133,9 +133,39 @@ namespace VendingMachine.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap B1rVJKqs {
+            get {
+                object obj = ResourceManager.GetObject("B1rVJKqs", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap images {
             get {
                 object obj = ResourceManager.GetObject("images", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VNVH2Ebc {
+            get {
+                object obj = ResourceManager.GetObject("VNVH2Ebc", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap VNVH2Ebc1 {
+            get {
+                object obj = ResourceManager.GetObject("VNVH2Ebc1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

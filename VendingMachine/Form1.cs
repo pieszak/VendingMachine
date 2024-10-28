@@ -2,6 +2,7 @@ using Microsoft.VisualBasic;
 using System;
 using System.Drawing.Text;
 using System.Security.AccessControl;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VendingMachine
 {
@@ -19,6 +20,7 @@ namespace VendingMachine
         decimal totalPriceCost;
         int valueTest;
         decimal totalMoneyInput;
+        decimal totalChange;
 
         Dictionary<string, decimal> drinkPrices = new Dictionary<string, decimal>()
         {
@@ -53,11 +55,19 @@ namespace VendingMachine
             try
             {
                 // Get the current directory where the program is running
-                string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string currentDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "receipt");
+                // Ensure the receipt folder exists
 
 
+                // Ensure the receipt folder exists
+                if (!Directory.Exists(currentDirectory))
+                {
+                    Directory.CreateDirectory(currentDirectory);
+                }
+
+                string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
                 // Create a path for the text file in the internal folder
-                string filePath = Path.Combine(currentDirectory, DateTime.Now + ".txt"); //send to debug/net/
+                string filePath = Path.Combine(currentDirectory, date + ".txt"); //send to debug/net/
 
                 // Write the content to the file
                 File.WriteAllText(filePath, content);
@@ -226,16 +236,29 @@ namespace VendingMachine
                 decimal foo = totalPriceCost - totalMoneyInput;
                 System.Windows.Forms.MessageBox.Show("Please insert £" + foo);
             }
-            else if (totalPriceCost == totalPriceCost)
+            else if (totalPriceCost == totalMoneyInput)
             {
                 System.Windows.Forms.MessageBox.Show("Thank you for your payment! Please take your drink");
-                
+                main_txtBox.Text += ControlChars.NewLine + "--------------------------------------------";
+                main_txtBox.Text += ControlChars.NewLine + "Total money paid = £" + totalMoneyInput;
+                main_txtBox.Text += ControlChars.NewLine + "--------------------------------------------";
+                main_txtBox.Text += ControlChars.NewLine + "Total Change = £" + totalChange;
+
+
                 WriteAllText(main_txtBox.Text);
                 resetValues();
             }
             else if (totalPriceCost < totalMoneyInput)
             {
-                // PROCESS PAYMENT - calculate difference and return change then reset
+                totalChange = totalMoneyInput - totalPriceCost;
+                System.Windows.Forms.MessageBox.Show("Thank you for your payment! Please take your drink. Your change is: £" + totalChange);
+                main_txtBox.Text += ControlChars.NewLine + "--------------------------------------------";
+                main_txtBox.Text += ControlChars.NewLine + "Total money paid = £" + totalMoneyInput;
+                main_txtBox.Text += ControlChars.NewLine + "--------------------------------------------";
+                main_txtBox.Text += ControlChars.NewLine + "Total Change = £" + totalChange;
+
+                WriteAllText(main_txtBox.Text);
+                resetValues();
             }
             else if (totalMoneyInput == null)
             {
@@ -245,3 +268,5 @@ namespace VendingMachine
     }
 }
 #endregion
+
+

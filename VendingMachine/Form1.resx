@@ -117,4 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label3.Text" xml:space="preserve">
+    <value>Welcome to GothicCoffee Co.
+
+Step into the shadows and 
+awaken your senses with our 
+exquisite brews! Our beans 
+are sourced from the misty 
+hills of Transylvania, where 
+the rich earth nurtures the 
+highest quality coffee. 
+Each blend captures the 
+essence of the night, with 
+deep, dark flavors that linger 
+like a haunting melody. 
+Embrace the gothic charm 
+and indulge in a cup of our 
+meticulously crafted coffee
+—where every sip is a taste 
+of the extraordinary. 
+
+Dare to enjoy the darkness; 
+your perfect brew awaits!</value>
+  </data>
 </root>

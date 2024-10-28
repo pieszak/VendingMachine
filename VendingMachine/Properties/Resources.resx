@@ -118,17 +118,26 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="5p" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5p.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="20p" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\20p.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="50p" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\50p.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="1pound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\1pound.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VNVH2Ebc" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\VNVH2Ebc.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="VNVH2Ebc1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\VNVH2Ebc1.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="images" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\images.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="1pound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\1pound.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="50p" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\50p.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="VposTouch-2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\VposTouch-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,13 +145,13 @@
   <data name="5pound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\5pound.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="5p" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\5p.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="2pound" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\2pound.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="10pound" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\10pound.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="2pound" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\2pound.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="B1rVJKqs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\B1rVJKqs.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
