@@ -1,0 +1,51 @@
+
+
+Vending Machine
+
+
+Form 1:
+	initialises the WinForms
+
+----------GLOBAL STARTS HERE----------
+global variables
+
+Dictionary List of Prices
+
+button control enabled - necessary for drag and drop
+
+write all text - receipt printer
+
+reset values
+
+----------GLOBAL ENDS HERE----------
+
+
+
+
+
+
+# region - DRAG AND DROP
+
+mouse down
+
+drag enter
+
+drag and drop
+
+
+
+
+
+
+# region - TEXTBOX SELECTION CONSTRUCTION
+
+selection constructor
+
+# region - EVENT ACTIONS
+
+latte click
+flat white click
+cappuccino click
+americano click
+sum button click
+payment button click

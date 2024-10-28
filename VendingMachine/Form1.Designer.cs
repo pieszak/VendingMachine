@@ -87,12 +87,12 @@
             // 
             // main_txtBox
             // 
-            main_txtBox.Location = new Point(785, 159);
+            main_txtBox.Location = new Point(785, 139);
             main_txtBox.Multiline = true;
             main_txtBox.Name = "main_txtBox";
             main_txtBox.ReadOnly = true;
             main_txtBox.ScrollBars = ScrollBars.Vertical;
-            main_txtBox.Size = new Size(279, 400);
+            main_txtBox.Size = new Size(279, 420);
             main_txtBox.TabIndex = 4;
             // 
             // sum_btn
@@ -305,7 +305,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(12, 159);
+            label3.Location = new Point(111, 139);
             label3.Name = "label3";
             label3.Size = new Size(205, 420);
             label3.TabIndex = 18;
@@ -317,7 +317,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImage = Properties.Resources.B1rVJKqs;
             BackgroundImageLayout = ImageLayout.Zoom;
-            ClientSize = new Size(1086, 820);
+            ClientSize = new Size(1105, 833);
             Controls.Add(label3);
             Controls.Add(cancel_but);
             Controls.Add(moneyPanel);
