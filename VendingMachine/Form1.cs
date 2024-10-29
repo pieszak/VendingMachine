@@ -32,16 +32,16 @@ namespace VendingMachine
             { "Americano", 2.95m }
         }; 
 
+        //error message for when the program falls into a critical state
         private void errorMessage()
         {
             MessageBox.Show("It seems that the vending machine fell into a fatal error. Please restart the machine.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
             
         }
 
+        //turns off and on the different panels - drink and payment panels
         private void buttonControlEnabled(int i, bool selection)
         // (i = 1) = / (i = 2) = 
-       
-
         {
             if (i == 0)
             {
@@ -56,27 +56,24 @@ namespace VendingMachine
             }
             else
             {
-                errorMessage(); // error message
+                errorMessage(); 
             }
         }
 
-        private static void WriteAllText(string content) //this works
+
+        private static void receiptPrinter(string content) 
         {
             try
             {
-                // Get the current directory where the program is running
                 string currentDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "receipt");
-                // Ensure the receipt folder exists
-
-
-                // Ensure the receipt folder exists
+                // make sure the receipt folder exists - especially if uploading onto different hardware
                 if (!Directory.Exists(currentDirectory))
                 {
                     Directory.CreateDirectory(currentDirectory);
                 }
 
-                string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-                // Create a path for the text file in the internal folder
+                string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"); // convert to string
+             
                 string filePath = Path.Combine(currentDirectory, date + ".txt"); //send to debug/net/
 
                 // Write the content to the file
@@ -93,7 +90,7 @@ namespace VendingMachine
         
 
 
-
+        // resets the value to allow for the next user
         private void resetValues()
         {
             totalMoneyInput = 0; totalPriceCost = 0; main_txtBox.Clear(); moneyIn_txtBox.Clear(); buttonControlEnabled(1, false); buttonControlEnabled(0, true); totalChange = 0;
@@ -105,6 +102,7 @@ namespace VendingMachine
         #region Drag and Drop --- Used for the money being deposited inside the cash machine
 
 
+        //money panel when mouse down input detected
         private void money_MouseDown(object sender, MouseEventArgs e)
         {
             PictureBox moneyBox = sender as PictureBox;
@@ -113,6 +111,7 @@ namespace VendingMachine
 
         }
 
+        // payment box allows drag enter to happen
         private void paymentBox_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Copy;
@@ -159,11 +158,11 @@ namespace VendingMachine
             {
                 errorMessage(); // error message
             }
-            // main_txtBox.Text = selectionText + " - £" + str_tempDrinkPrice + ControlChars.NewLine;
-            moneyIn_txtBox.Text = "£" + totalMoneyInput;
+            moneyIn_txtBox.Text = "£" + totalMoneyInput; //displays the amount inserted
         }
 
         #endregion
+
 
         #region Textbox Selection Construction
         // this function is responsible for controling the input on the text box
@@ -172,7 +171,6 @@ namespace VendingMachine
             // this is triggered on a selection of the drinks.
             if (foo == 0)
             {
-
                 decimal tempDrinkPrice = drinkPrices[selectionText]; //fetching price of drink also allows us to perform computation of total price
                 totalPriceCost = totalPriceCost + tempDrinkPrice; //sum of the cost of the order
 
@@ -204,44 +202,53 @@ namespace VendingMachine
 
 
         #region Event Actions
-        //-------------------------------------------------------------------------------------------------------------------------
-        private void btn_Latte_Click(object sender, EventArgs e)
+        
+        //button click events
+        private void btn_Latte_Click(object sender, EventArgs e) //latte
         {
             SelectionConstructor("Latte", 0);
             errorMessage();
         }
 
-        private void btn_FlatWhite_Click(object sender, EventArgs e)
+        private void btn_FlatWhite_Click(object sender, EventArgs e) //flat white
         {
             SelectionConstructor("Flat White", 0);
         }
 
-        private void btn_Cap_Click(object sender, EventArgs e)
+        private void btn_Cap_Click(object sender, EventArgs e) // cappucino
         {
             SelectionConstructor("Cappuccino", 0);
         }
 
-        private void btn_amer_Click(object sender, EventArgs e)
+        private void btn_amer_Click(object sender, EventArgs e) //americano
         {
             SelectionConstructor("Americano", 0);
         }
 
-        private void sum_btn_Click(object sender, EventArgs e) // this is the total button
+        private void sum_btn_Click(object sender, EventArgs e) // total putton
         {
             SelectionConstructor(null, 1);
             sum_btn.Enabled = false;
         }
 
-        private void cancel_but_Click(object sender, EventArgs e)
+        private void cancel_but_Click(object sender, EventArgs e) // cancel button
         {
-            System.Windows.Forms.MessageBox.Show("Cancel your order?", "Warning", MessageBoxButtons.YesNo);
-            resetValues();
-            
+            DialogResult Result = System.Windows.Forms.MessageBox.Show("Cancel your order?", "Warning", MessageBoxButtons.YesNo);
+
+            if (Result == DialogResult.Yes)
+            {
+                resetValues();
+            }
+            else 
+            {
+                // nothing else required
+            }
         }
 
+        // payment button even
         private void payment_but_Click(object sender, EventArgs e)
         {
-
+            
             var receiptTemplate = new Action(() =>            {
                 System.Windows.Forms.MessageBox.Show("Thank you for your payment! Please take your drink." + ControlChars.NewLine + "Your change is: £" + totalChange);
                 main_txtBox.Text += ControlChars.NewLine + "--------------------------------------------";
@@ -260,14 +267,14 @@ namespace VendingMachine
             {
          
                 receiptTemplate();
-                WriteAllText(main_txtBox.Text);
+                receiptPrinter(main_txtBox.Text);
                 resetValues();
             }
             else if (totalPriceCost < totalMoneyInput)
             {
                 totalChange = totalMoneyInput - totalPriceCost;
                 receiptTemplate();
-                WriteAllText(main_txtBox.Text);
+                receiptPrinter(main_txtBox.Text);
                 resetValues();
             }
             else if (totalMoneyInput == null)

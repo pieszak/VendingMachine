@@ -1,51 +1,83 @@
 
 
-Vending Machine
+
+                                 +----------------+
+                                 |     START     |
+                                 +----------------+
+                                        |
+                                 +----------------+
+                                 |  Initialize    |
+                                 |     Form       |
+                                 +----------------+
+                                         |
+                                         v
+                             +----------------------+
+                             | Disable Money Panel  |
+                             +----------------------+
+                                         |
+                                         v
+                +--------------------------------------------------+
+                |                    DRINK SELECTION                 |
+                |                                                    |
+                |                                                    |
+                |  +----------------+      +-------------------+     |
+                |->|  Select Drink  |      | Update Display &  |     |
+                |  |   and Price    |----->| Add to Total     |----->
+                |  +----------------+      +-------------------+     |
+                |                                                    |
+                |                                                    |
+                +--------------------------------------------------+
+                                           |
+                                           v
+                                   +--------------+
+                                   | Press Total? |
+                                   +--------------+
+                                      |        |
+                                  No  |        | Yes
+                                      |        v
+                                  +----------------+
+                                  | Enable Money   |
+                                  | Disable Drinks |
+                                  +----------------+
+                                          |
+                                          v
+                +--------------------------------------------------+
+               |                    MONEY INPUT                    |
+               |                                                   |
+               |  +-----------------+     +-------------------+    |
+               |->| Drag Drop Money |---->| Update Money      |    |
+               |  |                 |     | Display           |---->
+               |  +-----------------+     +-------------------+    |
+               |                                                   |
+               |                                                   |
+               +--------------------------------------------------+
+                                          |
+                                          v
+                                 +---------------+
+                                 | Press Payment |
+                                 +---------------+
+                                          |
+                                 +---------------+
+                                 | Check Amount  |
+                                 +---------------+
+                                          |
+                         +-----------------------+
+                         |                       |
+                         v                       v
+                +----------------+      +----------------+
+                | Not Enough     |      | Enough/Extra   |
+                | Show Required  |      | Print Receipt  |
+                +----------------+      | Give Change    |
+                         |             +----------------+
+                         |                      |
+                         |                      v
+                         |             +----------------+
+                         |             |  Reset Values  |
+                         |             +----------------+
+                         |                      |
+                         +----------------------+
 
 
-Form 1:
-	initialises the WinForms
-
-----------GLOBAL STARTS HERE----------
-global variables
-
-Dictionary List of Prices
-
-button control enabled - necessary for drag and drop
-
-write all text - receipt printer
-
-reset values
-
-----------GLOBAL ENDS HERE----------
-
-
-
-
-
-
-# region - DRAG AND DROP
-
-mouse down
-
-drag enter
-
-drag and drop
-
-
-
-
-
-
-# region - TEXTBOX SELECTION CONSTRUCTION
-
-selection constructor
-
-# region - EVENT ACTIONS
-
-latte click
-flat white click
-cappuccino click
-americano click
-sum button click
-payment button click
+    [Cancel] can be pressed at any time -----> [Confirm?] ---> [Yes] --> Reset
+                                                   |
+                                                   +-> [No] --> Return to flow
