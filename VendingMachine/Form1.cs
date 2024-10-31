@@ -3,82 +3,240 @@ using System;
 using System.Drawing.Text;
 using System.Security.AccessControl;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace VendingMachine
 {
     public partial class Form1 : Form
     {
-        public Form1() //starts the WinForm
+        public Form1()
         {
             InitializeComponent();
             paymentBox.AllowDrop = true;
-            buttonControlEnabled(1, false); // turns off the money box on start up -- ISSUE NEED TO FIX THE PHOTOS ARE NOT TURNING GREY
+            buttonControlEnabled(1, false);
+
+            foreach (string drink in drinkPrices.Keys) // allows us to change if the drinkPrices gets updated
+            {
+                drinkQuantities[drink] = 0;
+            }
+            UpdateListBox();
         }
 
-        #region Public Variables and Data --- Holds all public variables such as drink prices etc.
 
-        // global variables
+        #region Public Variables and Data
+
+        // global variable decleration
         private decimal totalPriceCost;
-        private int valueTest;
         private decimal totalMoneyInput;
         private decimal totalChange;
 
-        //price list of different drinks
+        private Dictionary<string, int> drinkQuantities = new Dictionary<string, int>();
+        private string lastAction = "Welcome! Please select your drinks.";
+
+
         private Dictionary<string, decimal> drinkPrices = new Dictionary<string, decimal>()
         {
             { "Flat White", 2.25m },
-            { "Latte", 2.85m },             
+            { "Latte", 2.85m },
             { "Cappuccino", 3.00m },
             { "Americano", 2.95m }
-        }; 
+        };
 
-        //error message for when the program falls into a critical state
         private void errorMessage()
         {
             MessageBox.Show("It seems that the vending machine fell into a fatal error. Please restart the machine.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            
         }
 
-        //turns off and on the different panels - drink and payment panels
+        //controls the money and drinks panel
         private void buttonControlEnabled(int i, bool selection)
-        // (i = 1) = / (i = 2) = 
         {
+
             if (i == 0)
             {
-                // this is the drink buttons
                 drinkSelectionPanel.Enabled = selection;
                 sum_btn.Enabled = true;
             }
             else if (i == 1)
             {
                 moneyPanel.Enabled = selection;
-                
             }
             else
             {
-                errorMessage(); 
+                errorMessage();
             }
         }
 
+        // resets values when the program comes to completion
+        private void resetValues()
+        {
+            totalMoneyInput = 0;
+            totalPriceCost = 0;
+            totalChange = 0;
+            main_listBox.Items.Clear();
+            moneyIn_txtBox.Clear();
+            foreach (var drink in drinkQuantities.Keys)
+            {
+                drinkQuantities[drink] = 0;
+            }
+            buttonControlEnabled(1, false);
+            buttonControlEnabled(0, true);
+            lastAction = "";
+        }
+        #endregion
 
-        private static void receiptPrinter(string content) 
+        #region Drag and Drop
+        private void money_MouseDown(object sender, MouseEventArgs e)
+        {
+            PictureBox moneyBox = sender as PictureBox;
+            moneyBox.DoDragDrop(moneyBox, DragDropEffects.Copy);
+        }
+
+        private void paymentBox_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Copy;
+        }
+
+        private void paymentBox_DragDrop(object sender, DragEventArgs e)
+        {
+            PictureBox droppedCoin = e.Data.GetData(typeof(PictureBox)) as PictureBox;
+
+            if (droppedCoin == money_5p) totalMoneyInput += .05m;
+            else if (droppedCoin == money_10p) totalMoneyInput += 0.10m;
+            else if (droppedCoin == money_20p) totalMoneyInput += 0.20m;
+            else if (droppedCoin == money_50p) totalMoneyInput += 0.50m;
+            else if (droppedCoin == money_1GBP) totalMoneyInput += 1.00m;
+            else if (droppedCoin == money_2GBP) totalMoneyInput += 2.00m;
+            else if (droppedCoin == money_5GBP) totalMoneyInput += 5.00m;
+            else if (droppedCoin == money_10GBP) totalMoneyInput += 10.00m;
+            else
+            {
+                errorMessage();
+            }
+            moneyIn_txtBox.Text = "£" + totalMoneyInput.ToString("F2");
+            lastAction = $"Added £{totalMoneyInput:F2}. Total inserted: £{totalMoneyInput:F2}";
+        }
+        #endregion
+
+        #region Selection Construction
+        private void UpdateListBox()
+        {
+            main_listBox.Items.Clear();
+            // First, add drink items
+            foreach (var drink in drinkQuantities.Where(x => x.Value > 0))
+            {
+                decimal price = drinkPrices[drink.Key];
+                decimal itemTotal = price * drink.Value;
+                string line = $"{drink.Key} x{drink.Value} - £{itemTotal:F2}";
+                main_listBox.Items.Add(line);
+            }
+
+            // Add a separator line
+            main_listBox.Items.Add("--------------------------------------------");
+
+            // Add total
+            main_listBox.Items.Add($"Your total is: £{totalPriceCost:F2}");
+
+            // Add last action at the very end
+            main_listBox.Items.Add(lastAction);
+        }
+
+        private void SelectionConstructor(string selectionText, int foo)
+        {
+            if (foo == 0 && !string.IsNullOrEmpty(selectionText))
+            {
+                drinkQuantities[selectionText]++;
+                totalPriceCost += drinkPrices[selectionText];
+                lastAction = $"Added 1 {selectionText} to your order.";
+                UpdateListBox();
+            }
+            else if (foo == 1)
+            {
+                buttonControlEnabled(0, false);
+                buttonControlEnabled(1, true);
+                lastAction = "Order totaled. Please insert payment.";
+            }
+        }
+        #endregion
+
+        #region Event Actions
+        private void btn_Latte_Click(object sender, EventArgs e)
+        {
+            SelectionConstructor("Latte", 0);
+        }
+
+        private void btn_FlatWhite_Click(object sender, EventArgs e)
+        {
+            SelectionConstructor("Flat White", 0);
+        }
+
+        private void btn_Cap_Click(object sender, EventArgs e)
+        {
+            SelectionConstructor("Cappuccino", 0);
+        }
+
+        private void btn_amer_Click(object sender, EventArgs e)
+        {
+            SelectionConstructor("Americano", 0);
+        }
+
+        private void sum_btn_Click(object sender, EventArgs e)
+        {
+            SelectionConstructor(null, 1);
+            sum_btn.Enabled = false;
+        }
+
+        private void cancel_but_Click(object sender, EventArgs e)
+        {
+            DialogResult Result = MessageBox.Show("Cancel your order?", "Warning", MessageBoxButtons.YesNo);
+            if (Result == DialogResult.Yes)
+            {
+                resetValues();
+            }
+            // else not required
+        }
+
+        private void payment_but_Click(object sender, EventArgs e)
+        {
+            if (totalPriceCost > totalMoneyInput)
+            {
+                decimal remaining = totalPriceCost - totalMoneyInput;
+                MessageBox.Show($"Please insert £{remaining:F2} more.");
+                lastAction = $"Insufficient funds. Please insert £{remaining:F2} more.";
+            }
+            else if (totalPriceCost <= totalMoneyInput)
+            {
+                //allows us to set the template for the receipt .txt file
+                totalChange = totalMoneyInput - totalPriceCost;
+                MessageBox.Show($"Thank you for your payment! Please take your drink. Your change is: £{totalChange:F2}");
+                main_listBox.Items.Add("--------------------------------------------");
+                main_listBox.Items.Add($"Total money paid = £{totalMoneyInput:F2}");
+                main_listBox.Items.Add("--------------------------------------------");
+                main_listBox.Items.Add($"Total Change = £{totalChange:F2}");
+                receiptPrinter(main_listBox.Items);
+                lastAction = "Payment complete. Thank you for your purchase!";
+                resetValues();
+            }
+            else
+            {
+                errorMessage();
+            }
+        }
+
+        private static void receiptPrinter(ListBox.ObjectCollection content) //used for saving the above text to a .txt file
         {
             try
             {
                 string currentDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "receipt");
-                // make sure the receipt folder exists - especially if uploading onto different hardware
                 if (!Directory.Exists(currentDirectory))
                 {
                     Directory.CreateDirectory(currentDirectory);
                 }
 
-                string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss"); // convert to string
-             
-                string filePath = Path.Combine(currentDirectory, date + ".txt"); //send to debug/net/
+                string date = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+                string filePath = Path.Combine(currentDirectory, date + ".txt");
 
-                // Write the content to the file
-                File.WriteAllText(filePath, content);
-
+                File.WriteAllLines(filePath, content.Cast<string>());
                 Console.WriteLine($"File successfully written to: {filePath}");
             }
             catch (Exception ex)
@@ -86,208 +244,6 @@ namespace VendingMachine
                 Console.WriteLine($"Error writing file: {ex.Message}");
             }
         }
-
-        
-
-
-        // resets the value to allow for the next user
-        private void resetValues()
-        {
-            totalMoneyInput = 0; totalPriceCost = 0; main_txtBox.Clear(); moneyIn_txtBox.Clear(); buttonControlEnabled(1, false); buttonControlEnabled(0, true); totalChange = 0;
-        }
-
-        #endregion 
-
-
-        #region Drag and Drop --- Used for the money being deposited inside the cash machine
-
-
-        //money panel when mouse down input detected
-        private void money_MouseDown(object sender, MouseEventArgs e)
-        {
-            PictureBox moneyBox = sender as PictureBox;
-
-            moneyBox.DoDragDrop(moneyBox, DragDropEffects.Copy);
-
-        }
-
-        // payment box allows drag enter to happen
-        private void paymentBox_DragEnter(object sender, DragEventArgs e)
-        {
-            e.Effect = DragDropEffects.Copy;
-        }
-
-        // once the item is dragged and dropped the price is increaced here
-        private void paymentBox_DragDrop(object sender, DragEventArgs e)
-        {
-            PictureBox droppedCoin = e.Data.GetData(typeof(PictureBox)) as PictureBox;
-
-            if (droppedCoin == money_5p)
-            {
-                totalMoneyInput += .05m;
-            }
-            else if (droppedCoin == money_10p)
-            {
-                totalMoneyInput += 0.10m;
-            }
-            else if (droppedCoin == money_20p)
-            {
-                totalMoneyInput += 0.20m;
-            }
-            else if (droppedCoin == money_50p)
-            {
-                totalMoneyInput += 0.50m;
-            }
-            else if (droppedCoin == money_1GBP)
-            {
-                totalMoneyInput += 1.00m;
-            }
-            else if (droppedCoin == money_2GBP)
-            {
-                totalMoneyInput += 2.00m;
-            }
-            else if (droppedCoin == money_5GBP)
-            {
-                totalMoneyInput += 5.00m;
-            }
-            else if (droppedCoin == money_10GBP)
-            {
-                totalMoneyInput += 10.00m;
-            }
-            else
-            {
-                errorMessage(); // error message
-            }
-            moneyIn_txtBox.Text = "£" + totalMoneyInput; //displays the amount inserted
-        }
-
-        #endregion
-
-
-        #region Textbox Selection Construction
-        // this function is responsible for controling the input on the text box
-        private void SelectionConstructor(string selectionText, int foo)
-        {
-            // this is triggered on a selection of the drinks.
-            if (foo == 0)
-            {
-                decimal tempDrinkPrice = drinkPrices[selectionText]; //fetching price of drink also allows us to perform computation of total price
-                totalPriceCost = totalPriceCost + tempDrinkPrice; //sum of the cost of the order
-
-                string str_tempDrinkPrice = tempDrinkPrice.ToString("F2"); // converting to string -- F2 makes sure 2 d.p are always displayed as "ToString" usually cuts off 0's
-
-                if (main_txtBox.Text == null)
-                {
-                    main_txtBox.Text = selectionText + " - £" + str_tempDrinkPrice + ControlChars.NewLine;
-                }
-                else
-                {
-                    main_txtBox.Text = main_txtBox.Text + selectionText + " - £" + str_tempDrinkPrice + ControlChars.NewLine;
-                }
-            }
-            // this is triggered if the total button is pressed.
-            else if (foo == 1)
-            {
-                string tempTotalPriceCost = totalPriceCost.ToString("F2");
-
-                main_txtBox.Text = main_txtBox.Text + "Your total is: £" + tempTotalPriceCost;
-
-                // Disables the buttons as per the assingment
-                buttonControlEnabled(0, false); //turns off the drinks selection
-                buttonControlEnabled(1, true); // turns on the money box
-            }
-        }
-        #endregion
-
-
-
-        #region Event Actions
-        
-        //button click events
-        private void btn_Latte_Click(object sender, EventArgs e) //latte
-        {
-            SelectionConstructor("Latte", 0);
-            errorMessage();
-        }
-
-        private void btn_FlatWhite_Click(object sender, EventArgs e) //flat white
-        {
-            SelectionConstructor("Flat White", 0);
-        }
-
-        private void btn_Cap_Click(object sender, EventArgs e) // cappucino
-        {
-            SelectionConstructor("Cappuccino", 0);
-        }
-
-        private void btn_amer_Click(object sender, EventArgs e) //americano
-        {
-            SelectionConstructor("Americano", 0);
-        }
-
-        private void sum_btn_Click(object sender, EventArgs e) // total putton
-        {
-            SelectionConstructor(null, 1);
-            sum_btn.Enabled = false;
-        }
-
-        private void cancel_but_Click(object sender, EventArgs e) // cancel button
-        {
-            DialogResult Result = System.Windows.Forms.MessageBox.Show("Cancel your order?", "Warning", MessageBoxButtons.YesNo);
-
-            if (Result == DialogResult.Yes)
-            {
-                resetValues();
-            }
-            else 
-            {
-                // nothing else required
-            }
-        }
-
-        // payment button even
-        private void payment_but_Click(object sender, EventArgs e)
-        {
-            
-            var receiptTemplate = new Action(() =>            {
-                System.Windows.Forms.MessageBox.Show("Thank you for your payment! Please take your drink." + ControlChars.NewLine + "Your change is: £" + totalChange);
-                main_txtBox.Text += ControlChars.NewLine + "--------------------------------------------";
-                main_txtBox.Text += ControlChars.NewLine + "Total money paid = £" + totalMoneyInput;
-                main_txtBox.Text += ControlChars.NewLine + "--------------------------------------------";
-                main_txtBox.Text += ControlChars.NewLine + "Total Change = £" + totalChange;
-             });
-
-            if (totalPriceCost > totalMoneyInput)
-            {
-                // not enough money
-                decimal foo = totalPriceCost - totalMoneyInput;
-                System.Windows.Forms.MessageBox.Show("Please insert £" + foo);
-            }
-            else if (totalPriceCost == totalMoneyInput)
-            {
-         
-                receiptTemplate();
-                receiptPrinter(main_txtBox.Text);
-                resetValues();
-            }
-            else if (totalPriceCost < totalMoneyInput)
-            {
-                totalChange = totalMoneyInput - totalPriceCost;
-                receiptTemplate();
-                receiptPrinter(main_txtBox.Text);
-                resetValues();
-            }
-            else if (totalMoneyInput == null)
-            {
-                System.Windows.Forms.MessageBox.Show("Please insert money");
-            }
-            else
-            {
-                errorMessage(); // error message
-            }
-        }
     }
 }
 #endregion
-
-

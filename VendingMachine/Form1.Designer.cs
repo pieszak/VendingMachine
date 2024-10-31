@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             btn_Latte = new Button();
             btn_FlatWhite = new Button();
-            main_txtBox = new TextBox();
             sum_btn = new Button();
             btn_amer = new Button();
             btn_Cap = new Button();
@@ -52,6 +51,7 @@
             payment_but = new Button();
             cancel_but = new Button();
             label3 = new Label();
+            main_listBox = new ListBox();
             ((System.ComponentModel.ISupportInitialize)money_5p).BeginInit();
             ((System.ComponentModel.ISupportInitialize)money_10p).BeginInit();
             ((System.ComponentModel.ISupportInitialize)paymentBox).BeginInit();
@@ -71,7 +71,7 @@
             btn_Latte.Name = "btn_Latte";
             btn_Latte.Size = new Size(236, 80);
             btn_Latte.TabIndex = 0;
-            btn_Latte.Text = "Latte";
+            btn_Latte.Text = "Latte - £2.85";
             btn_Latte.UseVisualStyleBackColor = true;
             btn_Latte.Click += btn_Latte_Click;
             // 
@@ -81,19 +81,9 @@
             btn_FlatWhite.Name = "btn_FlatWhite";
             btn_FlatWhite.Size = new Size(236, 77);
             btn_FlatWhite.TabIndex = 1;
-            btn_FlatWhite.Text = "Flat White";
+            btn_FlatWhite.Text = "Flat White - £2.25";
             btn_FlatWhite.UseVisualStyleBackColor = true;
             btn_FlatWhite.Click += btn_FlatWhite_Click;
-            // 
-            // main_txtBox
-            // 
-            main_txtBox.Location = new Point(785, 139);
-            main_txtBox.Multiline = true;
-            main_txtBox.Name = "main_txtBox";
-            main_txtBox.ReadOnly = true;
-            main_txtBox.ScrollBars = ScrollBars.Vertical;
-            main_txtBox.Size = new Size(279, 420);
-            main_txtBox.TabIndex = 4;
             // 
             // sum_btn
             // 
@@ -111,7 +101,7 @@
             btn_amer.Name = "btn_amer";
             btn_amer.Size = new Size(236, 80);
             btn_amer.TabIndex = 3;
-            btn_amer.Text = "Americano";
+            btn_amer.Text = "Americano - £2.95";
             btn_amer.UseVisualStyleBackColor = true;
             btn_amer.Click += btn_amer_Click;
             // 
@@ -121,7 +111,7 @@
             btn_Cap.Name = "btn_Cap";
             btn_Cap.Size = new Size(236, 80);
             btn_Cap.TabIndex = 2;
-            btn_Cap.Text = "Cappuccino";
+            btn_Cap.Text = "Cappuccino - £3.00";
             btn_Cap.UseVisualStyleBackColor = true;
             btn_Cap.Click += btn_Cap_Click;
             // 
@@ -311,6 +301,14 @@
             label3.TabIndex = 18;
             label3.Text = resources.GetString("label3.Text");
             // 
+            // main_listBox
+            // 
+            main_listBox.FormattingEnabled = true;
+            main_listBox.Location = new Point(717, 139);
+            main_listBox.Name = "main_listBox";
+            main_listBox.Size = new Size(244, 424);
+            main_listBox.TabIndex = 19;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -318,12 +316,12 @@
             BackgroundImage = Properties.Resources.B1rVJKqs;
             BackgroundImageLayout = ImageLayout.Zoom;
             ClientSize = new Size(1105, 833);
+            Controls.Add(main_listBox);
             Controls.Add(label3);
             Controls.Add(cancel_but);
             Controls.Add(moneyPanel);
             Controls.Add(drinkSelectionPanel);
             Controls.Add(sum_btn);
-            Controls.Add(main_txtBox);
             Name = "Form1";
             Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)money_5p).EndInit();
@@ -346,7 +344,6 @@
 
         private Button btn_Latte;
         private Button btn_FlatWhite;
-        private TextBox main_txtBox;
         private Button sum_btn;
         private Button btn_amer;
         private Button btn_Cap;
@@ -367,5 +364,6 @@
         private Label label1;
         private Label label2;
         private Label label3;
+        private ListBox main_listBox;
     }
 }
