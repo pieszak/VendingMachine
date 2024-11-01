@@ -1,8 +1,4 @@
-using Microsoft.VisualBasic;
 using System;
-using System.Drawing.Text;
-using System.Security.AccessControl;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
@@ -31,10 +27,14 @@ namespace VendingMachine
         private decimal totalMoneyInput;
         private decimal totalChange;
 
+        // Dictionary - allows the drinks to stack in the list box
         private Dictionary<string, int> drinkQuantities = new Dictionary<string, int>();
+
+
         private string lastAction = "Welcome! Please select your drinks.";
 
 
+        // Dictionary that has all the components of the drinks offered
         private Dictionary<string, decimal> drinkPrices = new Dictionary<string, decimal>()
         {
             { "Flat White", 2.25m },
@@ -43,12 +43,13 @@ namespace VendingMachine
             { "Americano", 2.95m }
         };
 
+        //error message get's printed whenever a critical faul happens in the code.
         private void errorMessage()
         {
             MessageBox.Show("It seems that the vending machine fell into a fatal error. Please restart the machine.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        //controls the money and drinks panel
+        //controls the money and drinks panel - turns on and off
         private void buttonControlEnabled(int i, bool selection)
         {
 
@@ -86,6 +87,8 @@ namespace VendingMachine
         #endregion
 
         #region Drag and Drop
+
+        //money down pressed
         private void money_MouseDown(object sender, MouseEventArgs e)
         {
             PictureBox moneyBox = sender as PictureBox;
@@ -97,6 +100,7 @@ namespace VendingMachine
             e.Effect = DragDropEffects.Copy;
         }
 
+        //
         private void paymentBox_DragDrop(object sender, DragEventArgs e)
         {
             PictureBox droppedCoin = e.Data.GetData(typeof(PictureBox)) as PictureBox;
@@ -113,12 +117,14 @@ namespace VendingMachine
             {
                 errorMessage();
             }
-            moneyIn_txtBox.Text = "£" + totalMoneyInput.ToString("F2");
-            lastAction = $"Added £{totalMoneyInput:F2}. Total inserted: £{totalMoneyInput:F2}";
+            moneyIn_txtBox.Text = "£" + totalMoneyInput.ToString("F2"); //F2 maintains the output is limited to 2 d.p.
+            lastAction = $"Added £{totalMoneyInput:F2}. Total inserted: £{totalMoneyInput:F2}"; // string interpolation
         }
         #endregion
 
         #region Selection Construction
+
+
         private void UpdateListBox()
         {
             main_listBox.Items.Clear();
